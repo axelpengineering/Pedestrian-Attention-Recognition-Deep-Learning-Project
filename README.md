@@ -40,9 +40,8 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 - Class-balanced sampling (downsample majority)
 - CSV index of paths, angles, and labels
 
-> *(Optional)* Add this graphic once you commit it:  
-> `![Class balance before/after](./docs/class_balance.png "Before vs After Balancing")`
-
+**Samples**
+IMAGE HERE
 ---
 
 ## Model
