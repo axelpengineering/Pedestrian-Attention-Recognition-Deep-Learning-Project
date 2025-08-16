@@ -14,7 +14,7 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 ## 🔗 Project Resources
 
 📄 [Final Report](./docs/final_report.pdf)  
-🎥 [Final Presentation Video](https://drive.google.com/file/d/1eysPCwh5j9hsn4KD0-tqDmSl9IHSxEUp/view?usp=sharing)  
+🎥 [Final Presentation Video](https://drive.google.com/file/d/1UnZOLgy0tU_djvsDBNjNY274a55oBblY/view?usp=sharing)  
 📓 [Notebook](notebook/final_training.ipynb)
 
 
