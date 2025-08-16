@@ -33,15 +33,16 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 **Labeling (angle-based):**
 - Extract 3D gaze vectors and compare to the camera forward axis
 - Compute angular difference (degrees)
-- **Attentive** if ≤ **20°**; **Distracted** otherwise
+- **Attentive (0)** if ≤ **20°**; **Distracted (1)** otherwise
 
-**Preprocessing**
+**Preprocessing:**
 - Grayscale conversion; **32×32** resolution
 - Class-balanced sampling (downsample majority)
 - CSV index of paths, angles, and labels
 
-**Samples**
-IMAGE HERE
+**Samples:**
+
+![Sample Image](./images/SamplePreProcessedData.png "Sample Image Data and Labels")
 ---
 
 ## Model
