@@ -28,7 +28,7 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 ---
 
 ## Dataset & Labeling
-**Source:** Gaze360 (rich head/gaze annotations across varied subjects, poses, and environments)
+**Source:** [Gaze360](https://gamma.csail.mit.edu/gaze360/) (rich head/gaze annotations across varied subjects, poses, and environments) 
 
 **Labeling (angle-based):**
 - Extract 3D gaze vectors and compare to the camera forward axis
