@@ -1,79 +1,78 @@
-# Pedestrian-Attention-Recognition-Deep-Learning-Project
-CNN-based pedestrian attention recognition system using real-world image data and PyTorch.
 
-## Project Goals
-- **Detect pedestrian attentiveness in real time** from images.
-- Issue a warning if a pedestrian is classified as distracted.
-- Build a robust preprocessing pipeline for gaze-based classification.
-- Handle highly imbalanced real-world data effectively.
 
----
+# Pedestrian Attention Recognition with Deep Learning
 
-## Dataset
-We use the **MPIIGaze** dataset:
-- **Size:** 213,659 RGB images from 15 participants in natural settings.
-- **Diversity:** Multiple head poses, lighting conditions, and backgrounds.
-- **Task adaptation:** Converted into a binary classification dataset.
+A CNN-based computer vision system that classifies pedestrians as **attentive** or **distracted** from images.  
+Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall** for safety-critical use.
 
-**Labeling Strategy:**
-1. Extract 2D head pose & gaze direction (pitch, yaw) from `annotation.txt`.
-2. Convert to 3D unit vectors.
-3. Compute angular difference.
-4. **Attentive** if difference ≤ 45°, **Distracted** otherwise.
+**Highlights**
+- **Test (held-out):** 87.0% accuracy · 86.46% recall  
+- **Unseen split (20% of dataset, never touched during dev):** 86.56% accuracy · 85.63% recall  
+- **Throughput:** reduced worst-case training time **4+ hours → ~50 minutes** via input resizing (32×32), pipeline optimizations, and architecture tweaks  
+- Balanced ~**25k** training images sampled from **Gaze360** to mitigate class skew
 
-**Class Balancing:**
-- Original: 176,618 distracted vs. 37,040 attentive → **highly imbalanced**.
-- Balanced via random downsampling → 37,040 per class (total 74,080 samples).
-
-**Preprocessing:**
-- Convert to grayscale.
-- Resize to 224×224 (later 64×64 for speed).
-- Store in `/attentive/` and `/distracted/` folders.
-- Upload final dataset to Google Drive for Colab training.
+📄 **Final Report:** `[add your PDF here]`  
+🎥 **Final Presentation:** `[add your video link]`  
+📓 **Notebook (optional):** `[link to a clean Colab or .ipynb in /notebooks]`
 
 ---
 
-## Key Challenges & Solutions
-| Challenge | Solution |
-|-----------|----------|
-| Dataset documentation referenced `.mat` files without image paths. | Located correct gaze/head pose data in nested `pXX/dayXX/annotation.txt` files. |
-| Too few “attentive” samples with strict 15° threshold. | Increased threshold to 45° after manual inspection. |
-| Preprocessing 200k+ images in Colab was slow. | Switched to local preprocessing in VS Code with multithreading. |
+## Goals
+- Detect pedestrian attentiveness in (near) real time  
+- Prioritize **recall** of distracted pedestrians (minimize false negatives)  
+- Build a robust preprocessing + training pipeline resilient to **class imbalance**
 
 ---
 
-## Model Architecture
-Primary model:
-- **Input:** Grayscale images.
-- **Layers:** 3× Conv + ReLU + Pool (3×3 filters, consistent stride & padding).
-- **Skip connection** to mitigate vanishing gradients.
-- **Two auxiliary loss functions** to aid convergence.
-- **Dropout (0.5)** for regularization.
+## Dataset & Labeling
+**Source:** Gaze360 (rich head/gaze annotations across varied subjects, poses, and environments)
 
-**Hyperparameters:**
-- Batch size: 64
-- Learning rate: 0.001
-- Auxiliary loss weight: 0.4
-- Epochs: 10
-- Optimizer: `BCEWithLogitsLoss`
-- Momentum: 0.9
-- Sample size for experiments: 5000 images
+**Labeling (angle-based):**
+- Extract 3D gaze vectors and compare to the camera forward axis
+- Compute angular difference (degrees)
+- **Attentive** if ≤ **20°**; **Distracted** otherwise
+
+**Preprocessing**
+- Grayscale conversion; **32×32** resolution
+- Class-balanced sampling (downsample majority)
+- CSV index of paths, angles, and labels
+
+> *(Optional)* Add this graphic once you commit it:  
+> `![Class balance before/after](./docs/class_balance.png "Before vs After Balancing")`
+
+---
+
+## Model
+**Architecture**
+- 3× Conv → ReLU → (MaxPool after conv1 & conv2)  
+- **Skip connection** (stability) + **two auxiliary outputs** (deeper supervision)  
+- Dropout(0.5) before the classifier  
+- Input: **32×32** grayscale
+
+**Training**
+- Loss: `BCEWithLogitsLoss` (+ aux losses)  
+- Optimizer: SGD (momentum 0.9)  
+- Typical batch size: 64; LR: 1e-3  
+- Environment: preprocessing in local VS Code; training in **Google Colab**
+
+**Baseline (for context)**
+- RBF-SVM on simple head-direction features (left/right) achieved ~99% on its easier task—useful sanity check, but not comparable to full-image attentiveness.
 
 ---
 
 ## Results
-| Metric | Value |
-|--------|-------|
-| Test Error | 0.5010 |
-| Test Loss  | 1.2488 |
-| Training Time | 4776.04s |
+**Held-out Test**
+- Accuracy **0.870** · Recall **0.8646**
 
-**Note:** Results are from preliminary experiments with a reduced dataset size (5000 samples) to iterate quickly.
+**Unseen Split (20% never used in tuning)**
+- Accuracy **0.8656** · Recall **0.8563**
+
+**Why this model?**
+- We selected the final architecture because it **recalls distracted pedestrians better** than alternatives with slightly higher accuracy—aligning with safety priorities.
 
 ---
 
-## Future Work
-- Train on the **full dataset** for higher accuracy.
-- Test with additional datasets like **GazeCapture** or **OpenFace**.
-- Integrate temporal modeling (LSTMs/GRUs) for video-based prediction.
-- Deploy as a **real-time attention detection module** in an autonomous driving simulation.
+## Reproducing
+1. Clone repo and create env  
+   ```bash
+   pip install -r requirements.txt  # add torch/torchvision, numpy, matplotlib, scikit-learn, etc.
