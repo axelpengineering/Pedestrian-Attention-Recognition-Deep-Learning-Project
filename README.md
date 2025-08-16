@@ -72,10 +72,3 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 
 **Why this model?**
 - We selected the final architecture because it **recalls distracted pedestrians better** than alternatives with slightly higher accuracy—aligning with safety priorities.
-
----
-
-## Reproducing
-1. Clone repo and create env  
-   ```bash
-   pip install -r requirements.txt  # add torch/torchvision, numpy, matplotlib, scikit-learn, etc.
