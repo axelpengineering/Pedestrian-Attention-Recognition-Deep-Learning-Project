@@ -11,9 +11,12 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 - **Throughput:** reduced worst-case training time **4+ hours → ~50 minutes** via input resizing (32×32), pipeline optimizations, and architecture tweaks  
 - Balanced ~**25k** training images sampled from **Gaze360** to mitigate class skew
 
-📄 **Final Report:** `[add your PDF here]`  
-🎥 **Final Presentation:** `[add your video link]`  
-📓 **Notebook (optional):** `[link to a clean Colab or .ipynb in /notebooks]`
+## 🔗 Project Resources
+
+📄 [Final Report](./docs/final_report.pdf)  
+🎥 [Final Presentation Video](https://drive.google.com/file/d/1eysPCwh5j9hsn4KD0-tqDmSl9IHSxEUp/view?usp=sharing)  
+📓 [Notebook](./notebooks/final_training.ipynb)
+
 
 ---
 
