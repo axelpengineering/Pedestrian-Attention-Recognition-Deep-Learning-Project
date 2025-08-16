@@ -8,7 +8,7 @@ Built in **PyTorch** (trained on **Google Colab**) with a focus on **high recall
 **Highlights**
 - **Test (held-out):** 87.0% accuracy · 86.46% recall  
 - **Unseen split (20% of dataset, never touched during dev):** 86.56% accuracy · 85.63% recall  
-- **Throughput:** reduced worst-case training time **4+ hours → ~50 minutes** via input resizing (32×32), pipeline optimizations, and architecture tweaks  
+- **Throughout:** reduced worst-case training time **4+ hours → ~50 minutes** via input resizing (32×32), pipeline optimizations, and architecture tweaks  
 - Balanced ~**25k** training images sampled from **Gaze360** to mitigate class skew
 
 ## 🔗 Project Resources
